@@ -10,23 +10,25 @@ import org.springframework.web.client.RestTemplate;
 
 /**
  * 使用@EnableCircuitBreaker注解开启断路器功能
+ *
  * @author eacdy
  */
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableCircuitBreaker
 public class MovieRibbonHystrixApplication {
-  /**
-   * 实例化RestTemplate，通过@LoadBalanced注解开启均衡负载能力.
-   * @return restTemplate
-   */
-  @Bean
-  @LoadBalanced
-  public RestTemplate restTemplate() {
-    return new RestTemplate();
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(MovieRibbonHystrixApplication.class, args);
+    }
 
-  public static void main(String[] args) {
-    SpringApplication.run(MovieRibbonHystrixApplication.class, args);
-  }
+    /**
+     * 实例化RestTemplate，通过@LoadBalanced注解开启均衡负载能力.
+     *
+     * @return restTemplate
+     */
+    @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 }

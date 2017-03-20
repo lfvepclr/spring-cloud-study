@@ -1,0 +1,39 @@
+microservice-discovery-eureka:
+  image: lofo/microservice-discovery-eureka
+  ports:
+  - 8761:8761
+  hostname: discovery
+microservice-provider-user:
+  image: lofo/microservice-provider-user
+  ports:
+  - 8000:8000
+  links:
+  - microservice-discovery-eureka
+microservice-consumer-movie-ribbon-with-hystrix:
+  image: lofo/microservice-consumer-movie-ribbon-with-hystrix
+  ports:
+  - 8011:8011
+  links:
+  - microservice-discovery-eureka
+  hostname: ribbon
+microservice-hystrix-dashboard:
+  image: lofo/microservice-hystrix-dashboard
+  ports:
+  - 8030:8030
+  links:
+  - microservice-discovery-eureka
+  - microservice-hystrix-turbine
+microservice-hystrix-turbine:
+  image: lofo/microservice-hystrix-turbine
+  ports:
+  - 8031:8031
+  links:
+  - microservice-discovery-eureka
+  - microservice-consumer-movie-ribbon-with-hystrix
+microservice-api-gateway:
+  image: lofo/microservice-api-gateway
+  ports:
+  - 8050:8050
+  links:
+  - microservice-discovery-eureka
+  - microservice-consumer-movie-ribbon-with-hystrix
